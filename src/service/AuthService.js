@@ -38,7 +38,7 @@ class AuthService extends AuthInterface {
     async login(correo, contrasenia) {
         const { data: userData, error } = await supabase
             .from("cuentas")
-            .select("idcuenta, correo, contrasenia")
+            .select("idcuenta, correo, contrasenia, esAdmin")
             .eq("correo", correo)
             .maybeSingle();
 
@@ -52,7 +52,7 @@ class AuthService extends AuthInterface {
         }
 
         const token = jwt.sign(
-            { userId: userData.idcuenta, correo: userData.correo },
+            { userId: userData.idcuenta, correo: userData.correo, isAdmin: userData.esAdmin },
             process.env.SUPABASE_JWT_SECRET,
             { expiresIn: "1h" }
         );
