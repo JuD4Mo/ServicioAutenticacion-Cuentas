@@ -75,7 +75,7 @@ export const generateAndSendOtp = async (correo, tipo = 'generico') => {
 
 
 
-export const verifyOtpCode = async (correo, otp) => {
+export const verifyOtpCode = async (correo, otp, marcarUsado = true) => {
   const { data, error } = await supabase
     .from('cuentas')
     .select('otp, expires_at, usado')
@@ -88,15 +88,18 @@ export const verifyOtpCode = async (correo, otp) => {
   const expirado = new Date(data.expires_at) < now;
 
   if (data.otp === otp && !expirado && !data.usado) {
-    await supabase
-      .from('cuentas')
-      .update({ otp: null, expires_at: null, usado: true })
-      .eq('correo', correo);
+    if (marcarUsado) {
+      await supabase
+        .from('cuentas')
+        .update({ otp: null, expires_at: null, usado: true })
+        .eq('correo', correo);
+    }
     return true;
   }
 
   return false;
 };
+
 
 const actualizarContraseniaSeguro = async (correo, nuevaContrasenia) => {
   const { data: cuenta, error } = await supabase
