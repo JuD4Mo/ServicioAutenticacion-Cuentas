@@ -97,7 +97,7 @@ export const verifyOtp = async (req, res) => {
   }
 
   try {
-    const valido = await cuentasService.verifyOtpCode(correo, otp);
+    const valido = await cuentasService.verifyOtpCode(correo, otp, false);
 
     if (valido) {
       res.status(200).json({ message: 'OTP válido' });
@@ -108,6 +108,7 @@ export const verifyOtp = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const cambiarPassword = async (req, res) => {
   const { correo, nuevaContrasenia} = req.body;
