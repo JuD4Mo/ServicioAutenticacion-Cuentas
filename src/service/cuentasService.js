@@ -69,7 +69,7 @@ export const generateAndSendOtp = async (correo, tipo = 'generico') => {
     case 'actualizacion':
       await sendOtpActualizarDatos(correo, nombre, otp); break;
     default:
-      await sendEmail(correo, 'Código OTP', `<p>Tu código OTP es: <strong>${otp}</strong></p>`);
+      await sendEmailOtp(correo, otp);
   }
 };
 

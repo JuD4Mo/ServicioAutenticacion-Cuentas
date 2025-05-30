@@ -4,7 +4,6 @@ dotenv.config();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// 🌟 Template base con logo y estilos
 const baseEmailTemplate = (title, body) => `
   <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
     <div style="max-width: 600px; margin: auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
@@ -37,6 +36,18 @@ export const sendEmail = async (to, subject, html) => {
     console.error('Error al enviar el correo:', error);
     throw error;
   }
+};
+
+export const sendEmailOtp = async (to, otp) => {
+  const subject = 'Código OTP de verificación';
+  const body = `
+    <p>Hola,</p>
+    <p>Tu código OTP es:</p>
+    <p style="font-size: 24px; font-weight: bold; color: #1E40AF; text-align: center;">${otp}</p>
+    <p>Este código es válido por <strong>5 minutos</strong>. Si no solicitaste este código, puedes ignorar este mensaje.</p>
+  `;
+  const html = baseEmailTemplate('Código OTP de verificación', body);
+  return await sendEmail(to, subject, html);
 };
 
 export const sendWelcomeEmail = async (to, name) => {
