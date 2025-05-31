@@ -1,6 +1,6 @@
 import { supabase } from "../db/supaClient.js";
 import { getTarjetaCuentaId } from "./tarjetaService.js";
-import { sendEmail } from '../utils/mailer.js';
+import { sendEmailOtp } from '../utils/mailer.js';
 import bcrypt from "bcryptjs";
 import { sendOtpRecuperacion, sendOtpActualizarDatos, sendOtpCambioPassword} from "../utils/mailer.js";
 
