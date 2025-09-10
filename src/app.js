@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use("/health", (req, res) => res.send("OK"));
 app.use("/cuenta", cuentaRouter);
 
 const PORT = 3008;
